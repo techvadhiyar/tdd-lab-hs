@@ -6,27 +6,30 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import edu.cpcc.labs.tdd.mocks.messaging.MessagingController;
-import edu.cpcc.labs.tdd.mocks.messaging.MessagingService;
 
 import static org.mockito.Mockito.when;
 
+// NOTE: the @ExtendWith annotation is used to integrate JUnit5 with  Mockito....
 @ExtendWith(MockitoExtension.class)
 class MessagingServiceMockTest {
 	
-	@Mock
+	@Mock (name="mockSMSService")
 	MessagingService  mockSMSService;
 	
+	@Mock (name="mockEmailService")
+	MessagingService  mockEmailService;
+		
 	@InjectMocks
 	MessagingController messagingController;
+		
 	
-
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 	}
@@ -36,7 +39,7 @@ class MessagingServiceMockTest {
 	}
 
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp() throws Exception {		
 	}
 
 	@AfterEach
@@ -48,13 +51,12 @@ class MessagingServiceMockTest {
 		
 		// make sure the mock is initialized
 		assertNotNull(mockSMSService);
-		assertNotNull(messagingController);
-		
+		assertNotNull(messagingController);		
 
 		// setup data
-		String message = "This is a test.";
+		String message = "This is a test SMS.";
 		
-		// define your condition...
+		// define your condition for the Mock...mimicking...
 		when(mockSMSService.send(message)).thenReturn(true);
 		
 		// execute test...
@@ -68,6 +70,29 @@ class MessagingServiceMockTest {
 		
 		// Validate test...
 		assertTrue(returnStatus);
+	}
+	
+	// @Disabled
+	@Test
+	void testMockEmailService() {
+
+		// make sure the mock is initialized
+		assertNotNull(mockEmailService);
+		assertNotNull(messagingController);		
+		
+		// setup data
+		String message = "This is a test email.";
+		
+		// define your condition for the Mock...mimicking...
+		when(mockEmailService.send(message)).thenReturn(true);
+		
+		// execute test...
+		// mock call...
+		Boolean returnStatus = messagingController.sendEmail(message);
+		
+		// Validate test...
+		assertTrue(returnStatus);
+
 	}
 
 }
