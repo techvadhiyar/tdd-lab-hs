@@ -1,4 +1,4 @@
-package edu.cpcc.labs.tdd.testdriven;
+package edu.cpcc.labs.tdd.testdriven.calculator;
 
 public class GeometricCalculator {
 	

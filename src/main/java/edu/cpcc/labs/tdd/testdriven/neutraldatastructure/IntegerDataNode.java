@@ -1,4 +1,4 @@
-package edu.cpcc.labs.tdd.testdriven;
+package edu.cpcc.labs.tdd.testdriven.neutraldatastructure;
 
 public class IntegerDataNode {
 	
@@ -15,6 +15,7 @@ public class IntegerDataNode {
 	public IntegerDataNode() {
 		this.data = null;
 		this.next = null;
+		this.previous = null;
 	}
 
 	public Integer getData() {

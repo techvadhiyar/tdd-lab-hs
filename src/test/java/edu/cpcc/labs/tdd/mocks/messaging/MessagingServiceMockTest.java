@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -20,11 +21,12 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class MessagingServiceMockTest {
 	
-	@Mock (name="mockSMSService")
-	MessagingService  mockSMSService;
+	// NOTE: so the key is to mock the classes that implement the MessagingService interface...
+	@Mock
+	SMSMessagingService  mockSMSService;
 	
-	@Mock (name="mockEmailService")
-	MessagingService  mockEmailService;
+	@Mock 
+	EmailMessagingService  mockEmailService;
 		
 	@InjectMocks
 	MessagingController messagingController;
@@ -39,14 +41,16 @@ class MessagingServiceMockTest {
 	}
 
 	@BeforeEach
-	void setUp() throws Exception {		
+	void setUp() throws Exception {			
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 	}
 
+	// @Disabled
 	@Test
+	@DisplayName("Testing a mock SMS service.")
 	void testMockSMSService() {
 		
 		// make sure the mock is initialized
@@ -54,7 +58,7 @@ class MessagingServiceMockTest {
 		assertNotNull(messagingController);		
 
 		// setup data
-		String message = "This is a test SMS.";
+		String message = "This is a test SMS message.";
 		
 		// define your condition for the Mock...mimicking...
 		when(mockSMSService.send(message)).thenReturn(true);
@@ -74,6 +78,7 @@ class MessagingServiceMockTest {
 	
 	// @Disabled
 	@Test
+	@DisplayName("Testing a mock Email service.")
 	void testMockEmailService() {
 
 		// make sure the mock is initialized
@@ -81,7 +86,7 @@ class MessagingServiceMockTest {
 		assertNotNull(messagingController);		
 		
 		// setup data
-		String message = "This is a test email.";
+		String message = "This is a test email message.";
 		
 		// define your condition for the Mock...mimicking...
 		when(mockEmailService.send(message)).thenReturn(true);
@@ -94,5 +99,6 @@ class MessagingServiceMockTest {
 		assertTrue(returnStatus);
 
 	}
-
+	
+	
 }

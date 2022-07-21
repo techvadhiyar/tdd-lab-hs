@@ -1,22 +1,23 @@
 package edu.cpcc.labs.tdd.mocks.messaging;
 
+import java.util.Hashtable;
+
 public class MessagingController {
 	
-	private MessagingService smsService;
-	private MessagingService emailService;
+	private Hashtable<String, MessagingService> serviceCatalog = new Hashtable<>();
 	
-	
-	public MessagingController(MessagingService smsService,
-			                   MessagingService emailService) {
-		this.smsService = smsService;
-		this.emailService = emailService;
+	// NOTE: modified the controller to take the concrete classes...
+	public MessagingController(SMSMessagingService smsService,
+			                   EmailMessagingService emailService) {
+		this.serviceCatalog.put("SMS", smsService);
+		this.serviceCatalog.put("EMAIL", emailService);
 	}
 	
 	public Boolean sendSMS(String message) {
-		return this.smsService.send(message);
+		return this.serviceCatalog.get("SMS").send(message);
 	}
 
 	public Boolean sendEmail(String message) {
-		return this.emailService.send(message);
+		return this.serviceCatalog.get("EMAIL").send(message);
 	}
 }
